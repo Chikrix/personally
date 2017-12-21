@@ -1,6 +1,8 @@
 package com.chidi.protein.personally.modules.home.fragments;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +19,7 @@ public class NewsDetailsFragment extends Fragment {
   private static NewsDetailsFragment newsDetailsFragment;
   private FragmentNewsDetailsBinding newsDetailsBinding;
   private Article article;
+  private String url;
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -28,11 +31,22 @@ public class NewsDetailsFragment extends Fragment {
     if (args != null && args.containsKey(Constants.ARTICLE_BUNDLE_KEY)) {
       article = (Article) args.getSerializable(Constants.ARTICLE_BUNDLE_KEY);
       newsDetailsBinding.setArticle(article);
+      url = article.getUrl();
+      newsDetailsBinding.setHandler(new Handler());
     } else {
       onDetach();
     }
 
     return newsDetailsBinding.getRoot();
+  }
+
+  public class Handler {
+
+    public void onLinkClicked(View view) {
+      Intent launchBrowser = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+
+      startActivity(launchBrowser);
+    }
   }
 
   public static NewsDetailsFragment newInstance(@NonNull Bundle bundle) {

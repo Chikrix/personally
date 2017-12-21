@@ -9,6 +9,9 @@
     <variable
         name="article"
         type="com.chidi.protein.personally.domain.models.Article"/>
+    <variable
+        name="handler"
+        type="com.chidi.protein.personally.modules.home.fragments.NewsDetailsFragment.Handler"/>
   </data>
 
   <ScrollView
@@ -154,7 +157,9 @@
           app:layout_constraintEnd_toStartOf="@+id/guideline3"
           app:layout_constraintStart_toStartOf="@+id/guideline2"
           app:layout_constraintTop_toBottomOf="@+id/textView10"
-          />
+          android:textColor="@color/colorPrimary"
+          android:clickable="true"
+          android:onClick="@{handler.onLinkClicked}"/>
     </android.support.constraint.ConstraintLayout>
   </ScrollView>
 </layout>

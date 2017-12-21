@@ -1,8 +1,9 @@
 package com.chidi.protein.personally.domain.models;
 
 import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 
-public class Source {
+public class Source implements Serializable {
 
   @SerializedName("id")  private String id;
   @SerializedName("name")  private String name;
