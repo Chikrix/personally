@@ -2,6 +2,7 @@ package com.chidi.protein.personally.modules.home.activities;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import com.chidi.protein.personally.R;
 import com.chidi.protein.personally.databinding.ActivityHomeBinding;
@@ -11,7 +12,7 @@ import com.chidi.protein.personally.modules.home.fragments.NewsDetailsFragment;
 import com.chidi.protein.personally.utils.Constants;
 import com.chidi.protein.personally.utils.SimpleFragmentManager;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
   private ActivityHomeBinding activityHomeBinding;
   private SimpleFragmentManager simpleFragmentManager;
 
@@ -22,8 +23,22 @@ public class HomeActivity extends AppCompatActivity {
     simpleFragmentManager.replaceFragment(HomeFragment.newInstance(), R.id.homeActivityFlContainer, true);
   }
 
+  @Override public void onBackStackChanged() {
+    shouldDisplayHomeUp();
+  }
+
   @Override public void onBackPressed() {
     super.onBackPressed();
+  }
+
+  public void shouldDisplayHomeUp() {
+    boolean canGoBack = getSupportFragmentManager().getBackStackEntryCount() > 0;
+    getSupportActionBar().setDisplayHomeAsUpEnabled(canGoBack);
+  }
+
+  @Override public boolean onSupportNavigateUp() {
+    onBackPressed();
+    return true;
   }
 
   public void navigateToHomeNewsFragment(Article article) {

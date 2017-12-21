@@ -120,6 +120,10 @@ public class HomeFragment extends Fragment {
         homeFragmentViewModel.isShowingProgressBar.set(false);
         List<Article> articleList = newsModel.getArticles();
         if (articleList != null && articleList.size() > 0) {
+          if (articleList.size() > 10) {
+            newsAdapter.updateMatchList(articleList.subList(0, 10));
+            return;
+          }
           newsAdapter.updateMatchList(articleList);
         } else {
           Toast.makeText(getContext(), R.string.nothining, Toast.LENGTH_SHORT).show();
