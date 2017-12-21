@@ -10,14 +10,22 @@ import io.reactivex.schedulers.Schedulers;
 public class OnlineRepository {
   private final RetrofitAdapter retrofitAdapter;
   private static OnlineRepository onlineRepository;
+  private NewsService newsService;
 
   private OnlineRepository() {
     retrofitAdapter = RetrofitAdapter.getInstance();
+    newsService = (NewsService) retrofitAdapter.createService(NewsService.class);
   }
 
-  public Flowable<NewsModel> fetchNewsItems(String query) {
-    NewsService newsService = (NewsService) retrofitAdapter.createService(NewsService.class);
-    return newsService.fetchNewsheadlines(query)
+  public Flowable<NewsModel> fetchNewsByKeyword(String query) {
+    return newsService.fetchNewsheadlinesByKeyword(query)
+        .subscribeOn(Schedulers.io())
+        .cache()
+        .observeOn(AndroidSchedulers.mainThread());
+  }
+  
+  public Flowable<NewsModel> fetchNewsByCategory(String category) {
+    return newsService.fetchNewsheadlinesByCategory(category)
         .subscribeOn(Schedulers.io())
         .cache()
         .observeOn(AndroidSchedulers.mainThread());

@@ -60,9 +60,9 @@ public class HomeFragment extends Fragment {
   @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
 
-    /*if(savedInstanceState != null && savedInstanceState.containsKey(Constants.BUNDLE_KEY)) {
+    if(savedInstanceState != null && savedInstanceState.containsKey(Constants.BUNDLE_KEY)) {
       searchQuery = savedInstanceState.getString(Constants.BUNDLE_KEY);
-    }*/
+    }
 
     awarenessManager.isWalkingOrDriving.subscribe(new Consumer<Boolean>() {
       @Override public void accept(Boolean walkingOrDriving) throws Exception {
@@ -83,9 +83,9 @@ public class HomeFragment extends Fragment {
 
   @Override public void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
-    /*if (searchQuery != null) {
+    if (searchQuery != null) {
       outState.putString(Constants.BUNDLE_KEY, searchQuery);
-    }*/
+    }
   }
 
   private void updatesAwarenessState(boolean update, int state) {

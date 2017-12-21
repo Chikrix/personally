@@ -9,6 +9,9 @@ import retrofit2.http.Query;
 public interface NewsService {
 
   @GET("top-headlines")
-  Flowable<NewsModel> fetchNewsheadlines(@Query("q") String query);
+  Flowable<NewsModel> fetchNewsheadlinesByKeyword(@Query("q") String query);
+
+  @GET("top-headlines")
+  Flowable<NewsModel> fetchNewsheadlinesByCategory(@Query("category") String category);
 
 }

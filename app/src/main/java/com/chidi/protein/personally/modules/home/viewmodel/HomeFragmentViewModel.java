@@ -24,16 +24,29 @@ public class HomeFragmentViewModel extends ViewModel {
 
   public void fetchNewsItems(String query) {
     seaqchQueryObservable.set(query);
-    Disposable disposable =
-        onlineRepository.fetchNewsItems(query).subscribe(new Consumer<NewsModel>() {
-          @Override public void accept(NewsModel newsModel) throws Exception {
-            newsItems.setValue(newsModel);
-          }
-        }, new Consumer<Throwable>() {
-          @Override public void accept(Throwable throwable) throws Exception {
+    Disposable disposable;
+    if (query.equals(Constants.QUERY_ENTERTAINMENT ) | query.equals(Constants.QUERY_TECHNOLOGY)) {
+      disposable = onlineRepository.fetchNewsByCategory(query).subscribe(new Consumer<NewsModel>() {
+        @Override public void accept(NewsModel newsModel) throws Exception {
+          newsItems.setValue(newsModel);
+        }
+      }, new Consumer<Throwable>() {
+        @Override public void accept(Throwable throwable) throws Exception {
 
-          }
-        });
+        }
+      });
+    } else {
+      disposable = onlineRepository.fetchNewsByKeyword(query).subscribe(new Consumer<NewsModel>() {
+        @Override public void accept(NewsModel newsModel) throws Exception {
+          newsItems.setValue(newsModel);
+        }
+      }, new Consumer<Throwable>() {
+        @Override public void accept(Throwable throwable) throws Exception {
+
+        }
+      });
+    }
+
     disposables.add(disposable);
   }
 
