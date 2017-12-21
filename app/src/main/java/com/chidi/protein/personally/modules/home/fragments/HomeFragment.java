@@ -33,7 +33,6 @@ public class HomeFragment extends Fragment {
   private boolean isHeadphoneConnected = false;
   private boolean isWalkingOrDriving = false;
 
-
   public HomeFragment() {
 
   }

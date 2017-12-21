@@ -3,10 +3,12 @@ package com.chidi.protein.personally.modules.home.adapters;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import com.chidi.protein.personally.R;
 import com.chidi.protein.personally.databinding.NewsItemBinding;
 import com.chidi.protein.personally.domain.models.Article;
+import com.chidi.protein.personally.modules.home.activities.HomeActivity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,12 +43,17 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsArticlesVi
     return articles.size();
   }
 
-  class NewsArticlesViewHolder extends RecyclerView.ViewHolder {
+  class NewsArticlesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private NewsItemBinding binding;
 
     public NewsArticlesViewHolder(NewsItemBinding binding) {
       super(binding.getRoot());
       this.binding = binding;
+      this.binding.getRoot().setOnClickListener(this);
+    }
+
+    @Override public void onClick(View v) {
+      ((HomeActivity) v.getContext()).navigateToHomeNewsFragment(binding.getArticle());
     }
 
     public void setFootballMatch(Article article) {

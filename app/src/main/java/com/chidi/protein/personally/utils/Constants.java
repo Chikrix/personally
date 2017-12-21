@@ -11,4 +11,5 @@ public class Constants {
   public static final String QUERY_TRAFFIC = "traffic";
   public static final String QUERY_ENTERTAINMENT = "entertainment";
   public static final String QUERY_TECHNOLOGY = "technology";
+  public static final String ARTICLE_BUNDLE_KEY = "article_bundle_key";
 }
