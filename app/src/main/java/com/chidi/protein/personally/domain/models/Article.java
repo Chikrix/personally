@@ -5,21 +5,12 @@ import java.io.Serializable;
 
 public class Article implements Serializable {
 
-  @SerializedName("source")  private Source source;
   @SerializedName("author") private String author;
   @SerializedName("title") private String title;
   @SerializedName("description") private String description;
   @SerializedName("url")  private String url;
   @SerializedName("urlToImage") private String urlToImage;
   @SerializedName("publishedAt") private String publishedAt;
-
-  public Source getSource() {
-    return source;
-  }
-
-  public void setSource(Source source) {
-    this.source = source;
-  }
 
   public String getAuthor() {
     return author;

@@ -1,0 +1,45 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "e7932d1fcfd1d5731290e44688d8cdc7",
+    "entities": [
+      {
+        "tableName": "news",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`status` TEXT NOT NULL, `total_results` INTEGER, `articles` TEXT, PRIMARY KEY(`status`))",
+        "fields": [
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "totalResults",
+            "columnName": "total_results",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "articles",
+            "columnName": "articles",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "status"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"e7932d1fcfd1d5731290e44688d8cdc7\")"
+    ]
+  }
+}
