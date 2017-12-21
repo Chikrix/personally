@@ -67,7 +67,7 @@ public class HomeFragment extends Fragment {
         if (articleList != null && articleList.size() > 0) {
           newsAdapter.updateMatchList(articleList);
         } else {
-          Toast.makeText(getContext(), "Nothing found", Toast.LENGTH_SHORT).show();
+          Toast.makeText(getContext(), R.string.nothining, Toast.LENGTH_SHORT).show();
         }
       }
     });

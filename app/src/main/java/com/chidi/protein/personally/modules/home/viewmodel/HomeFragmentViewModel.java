@@ -36,5 +36,7 @@ public class HomeFragmentViewModel extends ViewModel {
 
   @Override protected void onCleared() {
     onlineRepository = null;
+    offlineRepository = null;
+    disposables.dispose();
   }
 }
