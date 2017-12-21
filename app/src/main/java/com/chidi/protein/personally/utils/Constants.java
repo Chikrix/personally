@@ -7,4 +7,8 @@ public class Constants {
   public static final String KEY_API = "apikey";
   public static final String API_LANGUAGE = "language";
   public static final String LANGUAGE_ENGLISH = "en";
+  public static final String BUNDLE_KEY = "news_search_string";
+  public static final String QUERY_TRAFFIC = "traffic";
+  public static final String QUERY_ENTERTAINMENT = "entertainment";
+  public static final String QUERY_TECHNOLOGY = "technology";
 }

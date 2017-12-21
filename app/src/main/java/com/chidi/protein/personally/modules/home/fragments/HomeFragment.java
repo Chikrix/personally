@@ -18,6 +18,7 @@ import com.chidi.protein.personally.domain.models.Article;
 import com.chidi.protein.personally.domain.models.NewsModel;
 import com.chidi.protein.personally.modules.home.adapters.NewsAdapter;
 import com.chidi.protein.personally.modules.home.viewmodel.HomeFragmentViewModel;
+import com.chidi.protein.personally.utils.Constants;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -25,6 +26,7 @@ public class HomeFragment extends Fragment {
   private FragmentHomeBinding fragmentHomeBinding;
   private HomeFragmentViewModel homeFragmentViewModel;
   private NewsAdapter newsAdapter;
+  private String searchQuery;
 
   public HomeFragment() {
 
@@ -37,6 +39,12 @@ public class HomeFragment extends Fragment {
         DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
     homeFragmentViewModel = ViewModelProviders.of(this).get(HomeFragmentViewModel.class);
     fragmentHomeBinding.setViewModel(homeFragmentViewModel);
+
+    Bundle args = getArguments();
+    if (args != null && args.containsKey(Constants.BUNDLE_KEY)) {
+      searchQuery = args.getString(Constants.BUNDLE_KEY);
+    }
+
     setupListView();
     observeViewModels();
     return fragmentHomeBinding.getRoot();
@@ -44,12 +52,22 @@ public class HomeFragment extends Fragment {
 
   @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
+    if(savedInstanceState != null && savedInstanceState.containsKey(Constants.BUNDLE_KEY)) {
+      searchQuery = savedInstanceState.getString(Constants.BUNDLE_KEY);
+    }
     fetchNewsItems();
+  }
+
+  @Override public void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    if (searchQuery != null) {
+      outState.putString(Constants.BUNDLE_KEY, searchQuery);
+    }
   }
 
   private void fetchNewsItems() {
     homeFragmentViewModel.isShowingProgressBar.set(true);
-    homeFragmentViewModel.fetchNewsItems("technology");
+    homeFragmentViewModel.fetchNewsItems(searchQuery);
   }
 
   private void setupListView() {
@@ -73,10 +91,11 @@ public class HomeFragment extends Fragment {
     });
   }
 
-  public static HomeFragment newInstance() {
+  public static HomeFragment newInstance(@NonNull Bundle bundle) {
     if (homeFragment == null) {
       homeFragment = new HomeFragment();
     }
+    homeFragment.setArguments(bundle);
 
     return homeFragment;
   }

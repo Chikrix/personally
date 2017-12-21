@@ -22,15 +22,17 @@ public class HomeFragmentViewModel extends ViewModel {
   public MutableLiveData<NewsModel> newsItems = new MutableLiveData<>();
 
   public void fetchNewsItems(String query) {
-    Disposable disposable = onlineRepository.fetchNewsItems(query).subscribe(new Consumer<NewsModel>() {
-      @Override public void accept(NewsModel newsModel) throws Exception {
-        newsItems.setValue(newsModel);
-      }
-    }, new Consumer<Throwable>() {
-      @Override public void accept(Throwable throwable) throws Exception {
+    seaqchQueryObservable.set(query);
+    Disposable disposable =
+        onlineRepository.fetchNewsItems(query).subscribe(new Consumer<NewsModel>() {
+          @Override public void accept(NewsModel newsModel) throws Exception {
+            newsItems.setValue(newsModel);
+          }
+        }, new Consumer<Throwable>() {
+          @Override public void accept(Throwable throwable) throws Exception {
 
-      }
-    });
+          }
+        });
     disposables.add(disposable);
   }
 
