@@ -1,6 +1,8 @@
 package com.chidi.protein.personally.domain.api;
 
 import com.chidi.protein.personally.utils.Constants;
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import io.reactivex.schedulers.Schedulers;
 import java.io.IOException;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -22,6 +24,7 @@ public class RetrofitAdapter {
     retrofit =  new Retrofit.Builder()
         .baseUrl(Constants.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
         .client(getOkhttpClient())
         .build();
   }
