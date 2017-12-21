@@ -6,6 +6,7 @@ import android.databinding.ObservableField;
 import com.chidi.protein.personally.domain.models.NewsModel;
 import com.chidi.protein.personally.domain.repositories.OfflineRepository;
 import com.chidi.protein.personally.domain.repositories.OnlineRepository;
+import com.chidi.protein.personally.utils.Constants;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -15,7 +16,7 @@ public class HomeFragmentViewModel extends ViewModel {
   private OnlineRepository onlineRepository = OnlineRepository.getOnlineRepositoryInstance();
   private OfflineRepository offlineRepository = OfflineRepository.getOfflineRepositoryInstance();
   public ObservableField<Boolean> isShowingProgressBar = new ObservableField<>(true);
-  public ObservableField<String> seaqchQueryObservable = new ObservableField<>("technology");
+  public ObservableField<String> seaqchQueryObservable = new ObservableField<>(Constants.QUERY_TECHNOLOGY);
 
   private CompositeDisposable disposables = new CompositeDisposable();
 

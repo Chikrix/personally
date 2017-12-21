@@ -10,11 +10,17 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.ActivityRecognitionResult;
 import com.google.android.gms.location.DetectedActivity;
+import io.reactivex.subjects.PublishSubject;
 
+/**
+ * Utility class that publishes changes in the awareness being checked (walking, driving or headset)
+ *
+ * Lets me connect for Awareness and relays awareness update to a subscriber.
+ */
 public class AwarenessManager {
   private GoogleApiClient googleApiClient;
-  private boolean isHeadphonePluggedIn = false;
-  private boolean isWalkingOrDriving = false;
+  public PublishSubject<Boolean> isHeadphonePluggedIn = PublishSubject.create();
+  public PublishSubject<Boolean> isWalkingOrDriving = PublishSubject.create();
 
   public AwarenessManager(Context context) {
     googleApiClient = new GoogleApiClient.Builder(context).addApi(Awareness.API).build();
@@ -22,19 +28,13 @@ public class AwarenessManager {
 
   public void connectForAwareness() {
     googleApiClient.connect();
+    getSearchAwareContext();
+
   }
 
-  public String getSearchAwareContext() {
+  private void getSearchAwareContext() {
     updateOnHeadphoneState();
     updateOnMovementActivity();
-
-    if (isWalkingOrDriving) {
-      return Constants.QUERY_TRAFFIC;
-    } else if (isHeadphonePluggedIn) {
-      return Constants.QUERY_ENTERTAINMENT;
-    } else {
-      return Constants.QUERY_TECHNOLOGY;
-    }
   }
 
   private void updateOnHeadphoneState() {
@@ -75,10 +75,10 @@ public class AwarenessManager {
   }
 
   private void setHeadphonePluggedIn(boolean headphonePluggedIn) {
-    this.isHeadphonePluggedIn = headphonePluggedIn;
+    isHeadphonePluggedIn.onNext(headphonePluggedIn);
   }
 
   private void setWalkingOrDriving(boolean walkingOrDriving) {
-    isWalkingOrDriving = walkingOrDriving;
+    isWalkingOrDriving.onNext(walkingOrDriving);
   }
 }
