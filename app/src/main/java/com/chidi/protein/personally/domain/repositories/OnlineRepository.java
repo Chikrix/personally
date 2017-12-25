@@ -16,13 +16,13 @@ public class OnlineRepository {
     newsService = (NewsService) retrofitAdapter.createService(NewsService.class);
   }
 
-  public Flowable<NewsModel> fetchNewsByKeyword(String query) {
+  Flowable<NewsModel> fetchNewsByKeyword(String query) {
     return newsService.fetchNewsheadlinesByKeyword(query)
         .subscribeOn(Schedulers.io())
         .cache();
   }
   
-  public Flowable<NewsModel> fetchNewsByCategory(String category) {
+  Flowable<NewsModel> fetchNewsByCategory(String category) {
     return newsService.fetchNewsheadlinesByCategory(category)
         .subscribeOn(Schedulers.io())
         .cache();

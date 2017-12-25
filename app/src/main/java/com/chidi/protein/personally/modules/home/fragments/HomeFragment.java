@@ -127,9 +127,9 @@ public class HomeFragment extends Fragment {
   }
 
   private void observeViewModels() {
-    homeFragmentViewModel.isShowingProgressBar.set(false);
     homeFragmentViewModel.newsItems.observe(this, new Observer<NewsModel>() {
       @Override public void onChanged(@Nullable NewsModel newsModel) {
+        homeFragmentViewModel.isShowingProgressBar.set(false);
         if (newsModel == null) {
           Toast.makeText(getContext(), getString(R.string.nothining), Toast.LENGTH_SHORT).show();
           return;
