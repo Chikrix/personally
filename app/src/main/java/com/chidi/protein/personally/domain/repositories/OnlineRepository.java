@@ -4,7 +4,6 @@ import com.chidi.protein.personally.domain.api.NewsService;
 import com.chidi.protein.personally.domain.api.RetrofitAdapter;
 import com.chidi.protein.personally.domain.models.NewsModel;
 import io.reactivex.Flowable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class OnlineRepository {
@@ -20,15 +19,13 @@ public class OnlineRepository {
   public Flowable<NewsModel> fetchNewsByKeyword(String query) {
     return newsService.fetchNewsheadlinesByKeyword(query)
         .subscribeOn(Schedulers.io())
-        .cache()
-        .observeOn(AndroidSchedulers.mainThread());
+        .cache();
   }
   
   public Flowable<NewsModel> fetchNewsByCategory(String category) {
     return newsService.fetchNewsheadlinesByCategory(category)
         .subscribeOn(Schedulers.io())
-        .cache()
-        .observeOn(AndroidSchedulers.mainThread());
+        .cache();
   }
 
   public static OnlineRepository getOnlineRepositoryInstance() {

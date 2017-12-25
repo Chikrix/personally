@@ -43,7 +43,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentManager.O
 
   public void navigateToHomeNewsFragment(Article article) {
     Bundle args = new Bundle();
-    args.putSerializable(Constants.ARTICLE_BUNDLE_KEY, article);
+    //args.putSerializable(Constants.ARTICLE_BUNDLE_KEY, article);
     simpleFragmentManager.replaceFragment(NewsDetailsFragment.newInstance(args),
         R.id.homeActivityFlContainer, true);
   }

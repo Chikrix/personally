@@ -3,7 +3,7 @@ package com.chidi.protein.personally.domain.models;
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
-public class Article implements Serializable {
+public class Article  {
 
   @SerializedName("author") private String author;
   @SerializedName("title") private String title;

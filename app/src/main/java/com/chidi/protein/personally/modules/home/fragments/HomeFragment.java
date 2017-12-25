@@ -18,6 +18,7 @@ import com.chidi.protein.personally.domain.models.Article;
 import com.chidi.protein.personally.domain.models.NewsModel;
 import com.chidi.protein.personally.modules.home.adapters.NewsAdapter;
 import com.chidi.protein.personally.modules.home.viewmodel.HomeFragmentViewModel;
+import com.chidi.protein.personally.modules.home.viewmodel.NewsViewmodelFactory;
 import com.chidi.protein.personally.utils.AwarenessManager;
 import com.chidi.protein.personally.utils.Constants;
 import io.reactivex.functions.Consumer;
@@ -42,10 +43,12 @@ public class HomeFragment extends Fragment {
       @Nullable Bundle savedInstanceState) {
     fragmentHomeBinding =
         DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
-    homeFragmentViewModel = ViewModelProviders.of(this).get(HomeFragmentViewModel.class);
+    NewsViewmodelFactory factory = new NewsViewmodelFactory();
+    homeFragmentViewModel = ViewModelProviders.of(this, factory).get(HomeFragmentViewModel.class);
     fragmentHomeBinding.setViewModel(homeFragmentViewModel);
 
     awarenessManager = new AwarenessManager(getContext());
+    setDefaultQueryString();
     setupListView();
     observeViewModels();
     return fragmentHomeBinding.getRoot();
@@ -54,6 +57,7 @@ public class HomeFragment extends Fragment {
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     awarenessManager.connectForAwareness();
+    fetchMessagesFromDb();
   }
 
   @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -107,6 +111,10 @@ public class HomeFragment extends Fragment {
     homeFragmentViewModel.fetchNewsItems(searchQuery);
   }
 
+  private void fetchMessagesFromDb() {
+    homeFragmentViewModel.fetchNewsArticles();
+  }
+
   private void setupListView() {
     newsAdapter = new NewsAdapter();
     fragmentHomeBinding.fragmentHomeRvMessages.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -114,10 +122,18 @@ public class HomeFragment extends Fragment {
     fragmentHomeBinding.fragmentHomeRvMessages.setHasFixedSize(true);
   }
 
+  private void setDefaultQueryString() {
+    searchQuery = Constants.QUERY_TECHNOLOGY;
+  }
+
   private void observeViewModels() {
+    homeFragmentViewModel.isShowingProgressBar.set(false);
     homeFragmentViewModel.newsItems.observe(this, new Observer<NewsModel>() {
       @Override public void onChanged(@Nullable NewsModel newsModel) {
-        homeFragmentViewModel.isShowingProgressBar.set(false);
+        if (newsModel == null) {
+          Toast.makeText(getContext(), getString(R.string.nothining), Toast.LENGTH_SHORT).show();
+          return;
+        }
         List<Article> articleList = newsModel.getArticles();
         if (articleList != null && articleList.size() > 0) {
           if (articleList.size() > 10) {
