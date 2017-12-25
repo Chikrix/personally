@@ -12,7 +12,7 @@ import com.chidi.protein.personally.modules.home.fragments.NewsDetailsFragment;
 import com.chidi.protein.personally.utils.Constants;
 import com.chidi.protein.personally.utils.SimpleFragmentManager;
 
-public class HomeActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
+public class HomeActivity extends AppCompatActivity {
   private ActivityHomeBinding activityHomeBinding;
   private SimpleFragmentManager simpleFragmentManager;
 
@@ -23,27 +23,13 @@ public class HomeActivity extends AppCompatActivity implements FragmentManager.O
     simpleFragmentManager.replaceFragment(HomeFragment.newInstance(), R.id.homeActivityFlContainer, true);
   }
 
-  @Override public void onBackStackChanged() {
-    shouldDisplayHomeUp();
-  }
-
   @Override public void onBackPressed() {
     super.onBackPressed();
   }
 
-  public void shouldDisplayHomeUp() {
-    boolean canGoBack = getSupportFragmentManager().getBackStackEntryCount() > 0;
-    getSupportActionBar().setDisplayHomeAsUpEnabled(canGoBack);
-  }
-
-  @Override public boolean onSupportNavigateUp() {
-    onBackPressed();
-    return true;
-  }
-
   public void navigateToHomeNewsFragment(Article article) {
     Bundle args = new Bundle();
-    //args.putSerializable(Constants.ARTICLE_BUNDLE_KEY, article);
+    args.putSerializable(Constants.ARTICLE_BUNDLE_KEY, article);
     simpleFragmentManager.replaceFragment(NewsDetailsFragment.newInstance(args),
         R.id.homeActivityFlContainer, true);
   }
