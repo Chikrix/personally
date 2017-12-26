@@ -1,4 +1,7 @@
 <resources>
   <string name="app_name">Personally</string>
   <string name="nothining">Nothing found</string>
+  <string name="cant_update_play">Can\'t update Google Play services</string>
+  <string name="exit">Exiting app \.\.\.</string>
+  <string name="has_play_store">Check device has google play store</string>
 </resources>

@@ -20,5 +20,14 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
+    <ProgressBar
+        android:id="@+id/homeActivityPbLoading"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
   </android.support.constraint.ConstraintLayout>
 </layout>
