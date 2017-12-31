@@ -1,6 +1,7 @@
 package com.chidi.protein.personally.modules.home.activities;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import com.chidi.protein.personally.databinding.ActivityHomeBinding;
 import com.chidi.protein.personally.domain.models.Article;
 import com.chidi.protein.personally.modules.home.fragments.HomeFragment;
 import com.chidi.protein.personally.modules.home.fragments.NewsDetailsFragment;
+import com.chidi.protein.personally.modules.preferences.activities.SettingsActivity;
 import com.chidi.protein.personally.utils.Constants;
 import com.chidi.protein.personally.utils.SimpleFragmentManager;
 import com.google.android.gms.common.ConnectionResult;
@@ -51,7 +53,12 @@ public class HomeActivity extends AppCompatActivity {
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
-    return super.onOptionsItemSelected(item);
+    if (item.getItemId() == R.id.settings) {
+      Intent intent = new Intent(this, SettingsActivity.class);
+      startActivity(intent);
+      return true;
+    }
+    return false;
   }
 
   public void navigateToHomeNewsFragment(Article article) {
