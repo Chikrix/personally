@@ -4,6 +4,9 @@ import android.app.Dialog;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 import com.chidi.protein.personally.R;
@@ -39,6 +42,16 @@ public class HomeActivity extends AppCompatActivity {
 
   @Override public void onBackPressed() {
     super.onBackPressed();
+  }
+
+  @Override public boolean onCreateOptionsMenu(Menu menu) {
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.menu_main, menu);
+    return true;
+  }
+
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+    return super.onOptionsItemSelected(item);
   }
 
   public void navigateToHomeNewsFragment(Article article) {

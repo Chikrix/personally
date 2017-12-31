@@ -4,4 +4,16 @@
   <string name="cant_update_play">Can\'t update Google Play services</string>
   <string name="exit">Exiting app \.\.\.</string>
   <string name="has_play_store">Check device has google play store</string>
+  <string name="settings">Settings</string>
+  <string-array name="queryOptions">
+    <item>Technology</item>
+    <item>Entertainment</item>
+    <item>Traffic information</item>
+  </string-array>
+
+  <string-array name="queryValues">
+    <item>1</item>
+    <item>2</item>
+    <item>3</item>
+  </string-array>
 </resources>
