@@ -2,12 +2,15 @@ package com.chidi.protein.personally.modules.home.fragments;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,7 +126,19 @@ public class HomeFragment extends Fragment {
   }
 
   private void setDefaultQueryString() {
-    searchQuery = Constants.QUERY_TECHNOLOGY;
+    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+    String pref = preferences.getString("newsType", "1");
+    switch (pref) {
+      case "3":
+        searchQuery = Constants.QUERY_TRAFFIC;
+        break;
+      case "2":
+        searchQuery = Constants.QUERY_ENTERTAINMENT;
+        break;
+      default:
+        searchQuery = Constants.QUERY_TECHNOLOGY;
+        break;
+    }
   }
 
   private void observeViewModels() {
