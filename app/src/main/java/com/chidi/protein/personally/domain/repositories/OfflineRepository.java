@@ -55,6 +55,9 @@ public class OfflineRepository {
         .switchMap(new Function<NewsModel, Publisher<? extends NewsModel>>() {
           @Override public Publisher<NewsModel> apply(NewsModel newsModel)
               throws Exception {
+            if (newsModel.getTotalResults() < 1) {
+              return Flowable.just(new NewsModel());
+            }
             saveNews(newsModel).subscribe(new Action() {
               @Override public void run() throws Exception {
               }

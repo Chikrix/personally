@@ -5,6 +5,8 @@
   <string name="exit">Exiting app \.\.\.</string>
   <string name="has_play_store">Check device has google play store</string>
   <string name="settings">Settings</string>
+  <string name="nothing_found">Nothing found</string>
+
   <string-array name="queryOptions">
     <item>Technology</item>
     <item>Entertainment</item>

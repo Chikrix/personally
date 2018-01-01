@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,6 +86,12 @@ public class HomeFragment extends Fragment {
     });
   }
 
+  @Override public void onResume() {
+    super.onResume();
+
+    fetchNewsItems();
+  }
+
   @Override public void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
     if (searchQuery != null) {
@@ -105,11 +110,12 @@ public class HomeFragment extends Fragment {
     } else if (isHeadphoneConnected) {
       searchQuery = Constants.QUERY_ENTERTAINMENT;
     } else {
-      searchQuery = Constants.QUERY_TECHNOLOGY;
+      setDefaultQueryString();
     }
   }
 
   private void fetchNewsItems() {
+    setDefaultQueryString();
     homeFragmentViewModel.isShowingProgressBar.set(true);
     homeFragmentViewModel.fetchNewsItems(searchQuery);
   }
@@ -139,6 +145,7 @@ public class HomeFragment extends Fragment {
         searchQuery = Constants.QUERY_TECHNOLOGY;
         break;
     }
+    homeFragmentViewModel.seaqchQueryObservable.set(searchQuery);
   }
 
   private void observeViewModels() {
@@ -147,17 +154,20 @@ public class HomeFragment extends Fragment {
         homeFragmentViewModel.isShowingProgressBar.set(false);
         if (newsModel == null) {
           Toast.makeText(getContext(), getString(R.string.nothining), Toast.LENGTH_SHORT).show();
+          homeFragmentViewModel.isShowingEmptyState.set(true);
           return;
         }
         List<Article> articleList = newsModel.getArticles();
         if (articleList != null && articleList.size() > 0) {
           if (articleList.size() > 10) {
             newsAdapter.updateMatchList(articleList.subList(0, 10));
+            homeFragmentViewModel.isShowingEmptyState.set(false);
             return;
           }
           newsAdapter.updateMatchList(articleList);
         } else {
           Toast.makeText(getContext(), R.string.nothining, Toast.LENGTH_SHORT).show();
+          homeFragmentViewModel.isShowingEmptyState.set(true);
         }
       }
     });

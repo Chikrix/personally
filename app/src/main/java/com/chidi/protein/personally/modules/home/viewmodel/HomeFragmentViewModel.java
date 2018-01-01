@@ -17,6 +17,7 @@ public class HomeFragmentViewModel extends AndroidViewModel {
   private OfflineRepository offlineRepository;
 
   public ObservableField<Boolean> isShowingProgressBar = new ObservableField<>(true);
+  public ObservableField<Boolean> isShowingEmptyState = new ObservableField<>(false);
   public ObservableField<String> seaqchQueryObservable =
       new ObservableField<>(Constants.QUERY_TECHNOLOGY);
 
@@ -46,7 +47,11 @@ public class HomeFragmentViewModel extends AndroidViewModel {
     return offlineRepository.fetchNewsArticles(query, queryOrCategory)
         .subscribe(new Consumer<NewsModel>() {
       @Override public void accept(NewsModel newsModel) throws Exception {
-        newsItems.setValue(newsModel);
+        if (newsModel.getArticles() != null && newsModel.getArticles().size() > 0) {
+          newsItems.setValue(newsModel);
+        } else {
+          newsItems.setValue(null);
+        }
       }
     }, new Consumer<Throwable>() {
       @Override public void accept(Throwable throwable) throws Exception {

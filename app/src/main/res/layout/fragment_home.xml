@@ -68,7 +68,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline"
-        android:visibility="@{viewModel.isShowingProgressBar ? View.GONE : View.VISIBLE}"/>
+        android:visibility="@{viewModel.isShowingProgressBar || viewModel.isShowingEmptyState ? View.GONE : View.VISIBLE}"/>
 
     <ProgressBar
         android:id="@+id/fragmentHomePb"
@@ -83,6 +83,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="@{viewModel.isShowingProgressBar ? View.VISIBLE : View.GONE}"
+        />
+    <TextView
+        android:id="@+id/fragmentHomeTvEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/nothing_found"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/fragmentHomeRvMessages"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        android:visibility="@{viewModel.isShowingEmptyState ? View.VISIBLE : View.GONE}"
         />
 
   </android.support.constraint.ConstraintLayout>
