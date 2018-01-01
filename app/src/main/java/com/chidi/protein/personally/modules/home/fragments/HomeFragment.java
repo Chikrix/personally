@@ -50,7 +50,6 @@ public class HomeFragment extends Fragment {
     fragmentHomeBinding.setViewModel(homeFragmentViewModel);
 
     awarenessManager = new AwarenessManager(getContext());
-    setDefaultQueryString();
     setupListView();
     observeViewModels();
     return fragmentHomeBinding.getRoot();
@@ -68,6 +67,10 @@ public class HomeFragment extends Fragment {
     if(savedInstanceState != null && savedInstanceState.containsKey(Constants.BUNDLE_KEY)) {
       searchQuery = savedInstanceState.getString(Constants.BUNDLE_KEY);
     }
+  }
+
+  @Override public void onResume() {
+    super.onResume();
 
     awarenessManager.isWalkingOrDriving.subscribe(new Consumer<Boolean>() {
       @Override public void accept(Boolean walkingOrDriving) throws Exception {
@@ -84,12 +87,6 @@ public class HomeFragment extends Fragment {
         fetchNewsItems();
       }
     });
-  }
-
-  @Override public void onResume() {
-    super.onResume();
-
-    fetchNewsItems();
   }
 
   @Override public void onSaveInstanceState(Bundle outState) {
